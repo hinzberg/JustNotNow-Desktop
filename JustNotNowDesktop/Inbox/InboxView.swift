@@ -9,14 +9,8 @@ import SwiftUI
 
 struct InboxView: View {
     var body: some View {
-        ZStack {
-            Color.blue.opacity(0.15)
-                .ignoresSafeArea()
-
-            Text("Inbox")
-                .font(.largeTitle)
-                .padding()
-        }
+            InboxListView()
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
     }
 }
 

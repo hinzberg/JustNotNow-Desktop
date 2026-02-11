@@ -36,6 +36,7 @@ struct ContentView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            /*
             .toolbar {
                 ToolbarItem(placement: .automatic) {
                     Button {
@@ -50,6 +51,7 @@ struct ContentView: View {
                     }
                 }
             }
+            */
         }
     }
 

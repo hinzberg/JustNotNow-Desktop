@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct JustNotNowDesktopApp: App {
+    
+    var repository = ToDoRepository()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(repository)
         }
     }
 }
