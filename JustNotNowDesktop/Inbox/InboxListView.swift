@@ -7,6 +7,7 @@ import SwiftUI
 struct InboxListView: View {
     
     @Environment(ToDoRepository.self) private var repository
+    @Namespace private var zoomNamespace
     @State private var searchText = ""
     @State private var isNavigatingToAddForm = false
     
@@ -37,7 +38,8 @@ struct InboxListView: View {
             }
             .listStyle(.plain)
             .navigationDestination(isPresented: $isNavigatingToAddForm) {
-                // AddToDoItemView()
+                ToDoEntryView()
+                    .transition(.slide)
             }
             .navigationTitle("Just Not Now")
            // .navigationBarTitleDisplayMode(.inline)
@@ -49,15 +51,16 @@ struct InboxListView: View {
                 prompt: "Search ...")
             
             // MARK: NavigationBar Toolbar
-            /*
             .toolbar {
-                MainToolbar(
-                    onAdd: { isNavigatingToAddForm = true },
-                    onDeleteAll: { repository.clear() }
-                )
-              
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isNavigatingToAddForm = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .matchedTransitionSource(id: "toDoEntry", in: zoomNamespace)
+                    }
+                }
             }
-             */
             Spacer()
         }
     }
