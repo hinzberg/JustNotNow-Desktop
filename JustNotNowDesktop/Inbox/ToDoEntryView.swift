@@ -4,20 +4,26 @@
 import SwiftUI
 
 struct ToDoEntryView: View {
-    @State private var isVisible = false
+    
+    @Environment(ToDoRepository.self) var repository
+    @Environment(\.dismiss) var dismiss
+    
+    @State private var item = ToDoItem(
+        itemDescription: "test",
+        note: "note",
+        priority: 1,
+        reminderDate: nil,
+        isCompleted: false
+    )
     
     var body: some View {
-        ZStack {
-            Color.blue
-                .ignoresSafeArea()
-        }
-        .opacity(isVisible ? 1 : 0)
-        .scaleEffect(isVisible ? 1 : 0.98)
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.25)) {
-                isVisible = true
+            VStack {
+                TaskInfoSection(item: $item)
+                PrioritySection(item: $item)
+                SymbolSection(item: $item)
+                ReminderSection(item: $item)
+                Spacer()
             }
-        }
         .navigationTitle("New To-Do")
     }
 }
