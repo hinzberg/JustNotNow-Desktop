@@ -10,17 +10,31 @@ struct ReminderSection: View {
     
     var body: some View {
         
-        Section(header: Text("Reminder")) {
+        VStack (alignment: .leading) {
             Toggle("Set Reminder", isOn: Binding(
                 get: { item.reminderDate != nil },
                 set: { useReminder in
                     item.reminderDate = useReminder ? Date() : nil
                 }
             ))
+            .font(.title2)
             
             if item.reminderDate != nil {
-                DatePicker("Reminder Date", selection: Binding($item.reminderDate)!, displayedComponents: [.date, .hourAndMinute])
+                DatePicker("", selection: $item.reminderDate ?? Date() , displayedComponents: [.date, .hourAndMinute])
+                    .font(.title2)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Colors.sectionBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
+}
+
+// https://stackoverflow.com/questions/59272801/swiftui-datepicker-binding-optional-date-valid-nil
+public func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
+    Binding(
+        get: { lhs.wrappedValue ?? rhs },
+        set: { lhs.wrappedValue = $0 }
+    )
 }

@@ -9,8 +9,8 @@ import SwiftUI
 
 enum SidebarItem: String, CaseIterable, Identifiable {
     case inbox = "Inbox"
-    case daily = "Daily"
     case backlog = "Backlog"
+    case upNext = "Up Next"
     var id: Self { self }
 }
 
@@ -29,29 +29,13 @@ struct ContentView: View {
                 switch selection ?? .inbox {
                 case .inbox:
                     InboxView()
-                case .daily:
-                    DailyView()
                 case .backlog:
                     BacklogView()
+                case .upNext:
+                    UpNextView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            /*
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
-                    Button {
-                        withAnimation {
-                            columnVisibility = columnVisibility == .all ? .detailOnly : .all
-                        }
-                    } label: {
-                        Label(
-                            columnVisibility == .all ? "Hide Sidebar" : "Show Sidebar",
-                            systemImage: columnVisibility == .all ? "sidebar.left" : "sidebar.right"
-                        )
-                    }
-                }
-            }
-            */
         }
     }
 
@@ -59,10 +43,10 @@ struct ContentView: View {
         switch item {
         case .inbox:
             return "tray"
-        case .daily:
-            return "calendar"
         case .backlog:
             return "archivebox"
+        case .upNext:
+            return "calendar"
         }
     }
 }

@@ -22,8 +22,32 @@ struct ToDoEntryView: View {
                 PrioritySection(item: $item)
                 SymbolSection(item: $item)
                 ReminderSection(item: $item)
+                
+                HStack {
+                    Spacer()
+                    Button(role: .cancel) {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .font(.title2)
+                            .frame(width: 70)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                    
+                    Button(role: .confirm) {
+                        repository.add(item)
+                        dismiss()
+                    } label: {
+                        Text("Save")
+                            .font(.title2)
+                            .frame(width: 70)
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
                 Spacer()
             }
+            .padding()
         .navigationTitle("New To-Do")
     }
 }

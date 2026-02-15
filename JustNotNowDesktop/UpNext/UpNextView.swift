@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DailyView: View {
+struct UpNextView: View {
     var body: some View {
         ZStack {
             Color.green.opacity(0.15)
@@ -21,6 +21,6 @@ struct DailyView: View {
 }
 
 #Preview {
-    DailyView()
+    UpNextView()
 }
 

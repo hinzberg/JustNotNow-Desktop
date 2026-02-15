@@ -29,7 +29,7 @@ struct SymbolPickerView: View {
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
                                 .padding(8)
-                                .background(selectedSymbol == symbol ? Color.blue.opacity(0.3) : Color.clear)
+                                .background(selectedSymbol == symbol ? Colors.primaryAccent : Color.clear)
                                 .cornerRadius(8)
                                 .scaleEffect(tappedSymbol == symbol ? 1.3 : 1.0)
                                 .animation(.spring(response: 0.3, dampingFraction: 0.5), value: tappedSymbol)
