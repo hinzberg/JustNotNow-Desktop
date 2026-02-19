@@ -15,7 +15,7 @@ struct InboxListItemView: View {
             // MARK: Colored rectangle based on priority
             Rectangle()
                 .fill(priorityColor(for: item))
-                .frame(width: 15)
+                .frame(width: 10)
                 .cornerRadius(5)
                 .padding(EdgeInsets(top: 0, leading: 0 , bottom: 0, trailing: 10))
             
@@ -36,11 +36,12 @@ struct InboxListItemView: View {
             }
             Spacer()
             
-            if item.reminderDate != nil {
+            if let date = item.reminderDate {
                 Image(systemName: "clock")
                     .foregroundColor(item.isCompleted ? .secondary : .primary)
                     .font(.system(size: 16))
                     .padding(.trailing, 10)
+                    .help(date.formatted(date: .abbreviated, time: .shortened))
             }
         }
         .frame(maxWidth: .infinity)  // Ensure the HStack takes up the full width
