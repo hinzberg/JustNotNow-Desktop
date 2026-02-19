@@ -21,6 +21,7 @@ struct ReminderSection: View {
             
             if item.reminderDate != nil {
                 DatePicker("", selection: $item.reminderDate ?? Date() , displayedComponents: [.date, .hourAndMinute])
+                    .datePickerStyle(.automatic)
                     .font(.title2)
             }
         }

@@ -20,6 +20,11 @@ struct SymbolSection: View {
                     .scaledToFit()
                     .frame(width: 32, height: 32)
                     .padding(8)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(Colors.primaryAccent, lineWidth: 1)
+                    )
                 Spacer()
             }
             .contentShape(Rectangle())

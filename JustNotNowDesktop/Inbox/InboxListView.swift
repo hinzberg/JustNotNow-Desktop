@@ -33,6 +33,15 @@ struct InboxListView: View {
                         InboxListItemView(item: item)
                     }
                     .listRowSeparator(item == filteredItems.last ? .hidden : .visible)
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                repository.delete(item)
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                 }
                 .onDelete(perform: deleteItems)
             }
@@ -42,7 +51,6 @@ struct InboxListView: View {
                     .transition(.slide)
             }
             .navigationTitle("Just Not Now")
-           // .navigationBarTitleDisplayMode(.inline)
             
             // MARK: NavigationBar Search
             .searchable(
@@ -66,9 +74,11 @@ struct InboxListView: View {
     }
     
     private func deleteItems(at offsets: IndexSet) {
-        for index in offsets {
-            let item = repository.filteredItems(matching: searchText)[index]
-            repository.delete(item)
+        withAnimation(.easeInOut(duration: 0.25)) {
+            for index in offsets {
+                let item = repository.filteredItems(matching: searchText)[index]
+                repository.delete(item)
+            }
         }
     }
 }

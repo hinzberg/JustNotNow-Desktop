@@ -33,14 +33,15 @@ struct InboxListItemView: View {
                 Text("Priority: \(item.priority)")
                     .font(.subheadline)
                     .foregroundColor(item.isCompleted ? .secondary : .primary)
-                
-                if let date = item.reminderDate {
-                    Text("Reminds: \(date.formatted(date: .abbreviated, time: .shortened))")
-                        .font(.caption)
-                        .foregroundColor(item.isCompleted ? .secondary : .primary)
-                }
             }
             Spacer()
+            
+            if item.reminderDate != nil {
+                Image(systemName: "clock")
+                    .foregroundColor(item.isCompleted ? .secondary : .primary)
+                    .font(.system(size: 16))
+                    .padding(.trailing, 10)
+            }
         }
         .frame(maxWidth: .infinity)  // Ensure the HStack takes up the full width
         .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
