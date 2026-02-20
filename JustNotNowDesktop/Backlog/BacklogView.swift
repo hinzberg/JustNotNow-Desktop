@@ -9,14 +9,8 @@ import SwiftUI
 
 struct BacklogView: View {
     var body: some View {
-        ZStack {
-            Color.orange.opacity(0.15)
-                .ignoresSafeArea()
-
-            Text("Backlog")
-                .font(.largeTitle)
-                .padding()
-        }
+        BacklogListView()
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
     }
 }
 

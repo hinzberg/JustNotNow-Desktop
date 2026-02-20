@@ -58,6 +58,15 @@ class ToDoRepository {
         return filtered.sorted { $0.priority > $1.priority }
     }
     
+    func filteredBacklogItems(matching filter: String) -> [ToDoItem] {
+        guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let filtered = toDoItems.filter { $0.priority == 0 }
+            return filtered
+        }
+        let filtered = toDoItems.filter { $0.matchesFilter(filter) && $0.priority == 0 }
+        return filtered.sorted { $0.priority > $1.priority }
+    }
+    
     func add(_ item: ToDoItem) {
         toDoItems.append(item)
         //badgeManager.setBadgeNumber(toDoItems.count)
@@ -84,6 +93,18 @@ class ToDoRepository {
             toDoItems[index] = item
         } else {
             toDoItems.append(item)
+        }
+    }
+    
+    func moveToBacklog(_ item: ToDoItem) {
+        if let index = toDoItems.firstIndex(where: { $0.id == item.id }) {
+            toDoItems[index].priority = 0
+        }
+    }
+    
+    func moveToUpNext(_ item: ToDoItem) {
+        if let index = toDoItems.firstIndex(where: { $0.id == item.id }) {
+            toDoItems[index].priority = 1
         }
     }
 }

@@ -1,26 +1,25 @@
-//  ToDoListView.swift
-//  JustNotNow
-//  Created by Holger Hinzberg on 19.04.25.
+//  BacklogListView.swift
+//  JustNotNowDesktop
+//  Created by Holger Hinzberg on 20.02.26.
 
 import SwiftUI
 
-struct InboxListView: View {
+struct BacklogListView: View {
     
     @Environment(ToDoRepository.self) private var repository
     @Namespace private var zoomNamespace
     @State private var searchText = ""
-    @State private var isNavigatingToAddForm = false
     
     var body: some View {
         
         NavigationStack {
             
-            let filteredItems = repository.filteredInboxItems(matching: searchText)
+            let filteredItems = repository.filteredBacklogItems(matching: searchText)
             if filteredItems.isEmpty {
                 ContentUnavailableView(
-                    searchText.isEmpty ? "No To-Dos" : "No Results",
+                    searchText.isEmpty ? "No Items in Backlog" : "No Results",
                     systemImage: searchText.isEmpty ? "checkmark.circle" : "magnifyingglass",
-                    description: Text(searchText.isEmpty ? "Tap + to add your first to-do." : "Try a different search term.")
+                    description: Text(searchText.isEmpty ? "" : "Try a different search term.")
                 )
             }
             
@@ -28,7 +27,7 @@ struct InboxListView: View {
             List {
                 ForEach(filteredItems , id: \.id) { item in
                     NavigationLink {
-                        InboxEditView(item: item)
+                        BacklogEditView(item: item)
                     } label: {
                         InboxListItemView(item: item)
                     }
@@ -43,20 +42,16 @@ struct InboxListView: View {
                         }
                         Button(role: .destructive) {
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                repository.moveToBacklog(item)
+                                repository.moveToUpNext(item)
                             }
                         } label: {
-                            Label("Move to Backlog", systemImage: "arrowshape.turn.up.forward")
+                            Label("Move to Up Next", systemImage: "arrowshape.turn.up.forward")
                         }
                     }
                 }
                 .onDelete(perform: deleteItems)
             }
             .listStyle(.plain)
-            .navigationDestination(isPresented: $isNavigatingToAddForm) {
-                InboxEditView(item: ToDoItem.new())
-                    .transition(.slide)
-            }
             .navigationTitle(AppHelper.getWindowTitleWithVersion())
             
             // MARK: NavigationBar Search
@@ -64,18 +59,7 @@ struct InboxListView: View {
                 text: $searchText,
                 placement: .automatic ,
                 prompt: "Search ...")
-            
-            // MARK: NavigationBar Toolbar
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        isNavigatingToAddForm = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .matchedTransitionSource(id: "toDoEntry", in: zoomNamespace)
-                    }
-                }
-            }
+
             Spacer()
         }
     }
@@ -89,4 +73,3 @@ struct InboxListView: View {
         }
     }
 }
-

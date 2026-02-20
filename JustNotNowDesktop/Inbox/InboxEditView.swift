@@ -9,18 +9,18 @@ struct InboxEditView: View {
     @Environment(\.dismiss) var dismiss
 
     @State var item : ToDoItem
+    @State private var isExistingItem: Bool = false
     
     var body: some View {
             VStack {
                 TaskInfoSection(item: $item)
-                PrioritySection(item: $item)
+                // PrioritySection(item: $item)
                 SymbolSection(item: $item)
                 ReminderSection(item: $item)
                 
                 HStack {
                     Button(role: .confirm) {
-                        item.priority = 0
-                        repository.addOrUpdate(item)
+                        repository.moveToBacklog(item)
                         dismiss()
                     } label: {
                         Text("Move to Backlog")
@@ -55,7 +55,10 @@ struct InboxEditView: View {
                 Spacer()
             }
             .padding()
-        .navigationTitle("New To-Do")
+            .onAppear {
+                isExistingItem = repository.sortedByPriority().contains { $0.id == item.id }
+            }
+            .navigationTitle(isExistingItem ? "Edit ToDo" : "Add New ToDo" )
     }
 }
 
