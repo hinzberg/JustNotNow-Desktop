@@ -16,12 +16,12 @@ class ToDoRepository {
     init() {
         
         toDoItems = [
-            ToDoItem(itemDescription: "Buy groceries", imageName: "cart", priority: 1, reminderDate: Date().addingTimeInterval(3600)),
-            ToDoItem(itemDescription: "Walk the dog", imageName: "pawprint", priority: 2, reminderDate: nil),
-            ToDoItem(itemDescription: "Finish SwiftUI project", imageName: "laptopcomputer", priority: 3, reminderDate: Date().addingTimeInterval(86400)),
-            ToDoItem(itemDescription: "Call Mom", imageName: "phone", priority: 4, reminderDate: Date().addingTimeInterval(7200)),
-            ToDoItem(itemDescription: "Read a book", imageName: "book", priority: 5, reminderDate: nil),
-            ToDoItem(itemDescription: "Go for a walk", imageName: "figure.walk", priority: 6, reminderDate: nil),
+            ToDoItem(itemDescription: "Buy groceries", imageName: "cart", priority: -1, reminderDate: Date().addingTimeInterval(3600)),
+            ToDoItem(itemDescription: "Walk the dog", imageName: "pawprint", priority: -1, reminderDate: nil),
+            ToDoItem(itemDescription: "Finish SwiftUI project", imageName: "laptopcomputer", priority: -1, reminderDate: Date().addingTimeInterval(86400)),
+            ToDoItem(itemDescription: "Call Mom", imageName: "phone", priority: 0, reminderDate: Date().addingTimeInterval(7200)),
+            ToDoItem(itemDescription: "Read a book", imageName: "book", priority: 1, reminderDate: nil),
+            ToDoItem(itemDescription: "Go for a walk", imageName: "figure.walk", priority: 2, reminderDate: nil),
         ]
         
         //badgeManager.setBadgeNumber(toDoItems.count)
@@ -45,8 +45,16 @@ class ToDoRepository {
         guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return toDoItems.sorted { $1.priority > $0.priority }
         }
-        
         let filtered = toDoItems.filter { $0.matchesFilter(filter) }
+        return filtered.sorted { $0.priority > $1.priority }
+    }
+    
+    func filteredInboxItems(matching filter: String) -> [ToDoItem] {
+        guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let filtered = toDoItems.filter { $0.priority == -1 }
+            return filtered
+        }
+        let filtered = toDoItems.filter { $0.matchesFilter(filter) && $0.priority == -1 }
         return filtered.sorted { $0.priority > $1.priority }
     }
     

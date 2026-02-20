@@ -1,4 +1,4 @@
-//  ToDoItemView.swift
+//  ToDoItemListView.swift
 //  JustNotNow
 //  Created by Holger Hinzberg on 19.04.25.
 
@@ -29,10 +29,6 @@ struct InboxListItemView: View {
                 Text(item.itemDescription)
                     .font(.headline)
                     .foregroundColor(item.isCompleted ? .secondary : .primary)
-                
-                Text("Priority: \(item.priority)")
-                    .font(.subheadline)
-                    .foregroundColor(item.isCompleted ? .secondary : .primary)
             }
             Spacer()
             
@@ -48,15 +44,5 @@ struct InboxListItemView: View {
         .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
         .listRowInsets(EdgeInsets())
         .frame( maxWidth: .infinity)
-        
-        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            Button {
-                repository.toggleCompletion(item)
-            } label: {
-                Label(item.isCompleted ? "Uncomplete" : "Complete",
-                      systemImage: item.isCompleted ? "arrow.uturn.backward.circle" : "checkmark.circle")
-            }
-            .tint(item.isCompleted ? .orange : .green)
-        }
     }
 }

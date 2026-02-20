@@ -15,7 +15,7 @@ struct InboxListView: View {
         
         NavigationStack {
             
-            let filteredItems = repository.filteredItems(matching: searchText)
+            let filteredItems = repository.filteredInboxItems(matching: searchText)
             if filteredItems.isEmpty {
                 ContentUnavailableView(
                     searchText.isEmpty ? "No To-Dos" : "No Results",

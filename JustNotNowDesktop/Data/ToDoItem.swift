@@ -29,7 +29,7 @@ struct ToDoItem: Identifiable, Hashable {
         ToDoItem(
             itemDescription: "",
             note: "",
-            imageName: "star.fill",
+            imageName: "star",
             priority: -1,
             creationDate: Date(),
             isCompleted: false
@@ -40,7 +40,7 @@ struct ToDoItem: Identifiable, Hashable {
         ToDoItem(
             itemDescription: "Sample Task",
             note: "This is a sample note for the ToDoItem.",
-            imageName: "star.fill",
+            imageName: "star",
             priority: -1,
             creationDate: Date(),
             reminderDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()),
