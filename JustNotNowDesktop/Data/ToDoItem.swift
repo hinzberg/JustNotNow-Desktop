@@ -5,11 +5,13 @@
 import Foundation
 
 struct ToDoItem: Identifiable, Hashable {
+    
     let id = UUID()
     var itemDescription: String
     var note: String = ""
     var imageName: String = "star"
-    var priority: Int
+    var priority: Int = -1
+    var creationDate: Date = Date()
     var reminderDate: Date?
     var isCompleted: Bool = false
     
@@ -22,4 +24,27 @@ struct ToDoItem: Identifiable, Hashable {
             return itemDescription.lowercased().contains(lowercasedFilter) ||
                    note.lowercased().contains(lowercasedFilter)
         }
+    
+    static func new() -> ToDoItem {
+        ToDoItem(
+            itemDescription: "",
+            note: "",
+            imageName: "star.fill",
+            priority: -1,
+            creationDate: Date(),
+            isCompleted: false
+        )
+    }
+    
+    static func sample() -> ToDoItem {
+        ToDoItem(
+            itemDescription: "Sample Task",
+            note: "This is a sample note for the ToDoItem.",
+            imageName: "star.fill",
+            priority: -1,
+            creationDate: Date(),
+            reminderDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()),
+            isCompleted: false
+        )
+    }
 }

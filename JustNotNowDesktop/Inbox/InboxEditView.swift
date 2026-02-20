@@ -3,18 +3,12 @@
 
 import SwiftUI
 
-struct ToDoEntryView: View {
+struct InboxEditView: View {
     
     @Environment(ToDoRepository.self) var repository
     @Environment(\.dismiss) var dismiss
-    
-    @State private var item = ToDoItem(
-        itemDescription: "test",
-        note: "note",
-        priority: 1,
-        reminderDate: nil,
-        isCompleted: false
-    )
+
+    @State var item : ToDoItem
     
     var body: some View {
             VStack {
@@ -24,6 +18,19 @@ struct ToDoEntryView: View {
                 ReminderSection(item: $item)
                 
                 HStack {
+                    Button(role: .confirm) {
+                        item.priority = 0
+                        repository.addOrUpdate(item)
+                        dismiss()
+                    } label: {
+                        Text("Move to Backlog")
+                            .font(.title2)
+                            .frame(width: 140)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    Spacer()
+                    
                     Spacer()
                     Button(role: .cancel) {
                         dismiss()
@@ -36,7 +43,7 @@ struct ToDoEntryView: View {
                     .tint(.red)
                     
                     Button(role: .confirm) {
-                        repository.add(item)
+                        repository.addOrUpdate(item)
                         dismiss()
                     } label: {
                         Text("Save")
@@ -54,6 +61,6 @@ struct ToDoEntryView: View {
 
 #Preview {
     NavigationStack {
-        ToDoEntryView()
+        InboxEditView(item: .sample())
     }
 }

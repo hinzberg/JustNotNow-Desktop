@@ -28,7 +28,7 @@ struct InboxListView: View {
             List {
                 ForEach(filteredItems , id: \.id) { item in
                     NavigationLink {
-                       // EditToDoView(item: item)
+                        InboxEditView(item: item)
                     } label: {
                         InboxListItemView(item: item)
                     }
@@ -47,7 +47,7 @@ struct InboxListView: View {
             }
             .listStyle(.plain)
             .navigationDestination(isPresented: $isNavigatingToAddForm) {
-                ToDoEntryView()
+                InboxEditView(item: ToDoItem.new())
                     .transition(.slide)
             }
             .navigationTitle("Just Not Now")

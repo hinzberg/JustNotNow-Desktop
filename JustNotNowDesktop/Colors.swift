@@ -15,4 +15,28 @@ struct Colors {
         let alpha = max(0.0, min(1.0, a))
         return Color(red: red, green: green, blue: blue, opacity: alpha)
     }
+    
+    // Helper function to return a red→green gradient color based on priority (1..6)
+    public static func priorityColor(for item: ToDoItem) -> Color {
+        
+        if item.isCompleted {
+            return .secondary
+        }
+        
+        // Only 1...6 are valid; everything else is gray
+        guard (1...6).contains(item.priority) else {
+            return .gray
+        }
+        
+        let clamped = item.priority
+        
+        // Map 1 → red, 6 → green with a smooth gradient in between
+        let t = Double(clamped - 1) / 5.0     // 0.0 ... 1.0
+        let red   = 1.0 - t                   // 1 → 0
+        let green = t                         // 0 → 1
+        
+        return Color(red: red, green: green, blue: 0.0)
+    }
+    
+    
 }

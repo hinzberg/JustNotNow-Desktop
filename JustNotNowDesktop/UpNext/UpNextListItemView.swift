@@ -1,10 +1,13 @@
-//  ToDoItemView.swift
-//  JustNotNow
-//  Created by Holger Hinzberg on 19.04.25.
+//
+//  InboxListItemView.swift
+//  JustNotNowDesktop
+//
+//  Created by Holger Hinzberg on 20.02.26.
+//
 
 import SwiftUI
 
-struct InboxListItemView: View {
+struct UpNextListItemView: View {
     
     @Environment(ToDoRepository.self) var repository
     let item: ToDoItem
@@ -14,7 +17,7 @@ struct InboxListItemView: View {
             
             // MARK: Colored rectangle based on priority
             Rectangle()
-                .fill(Colors.priorityColor(for: item))
+            .fill(Colors.priorityColor(for: item))
                 .frame(width: 10)
                 .cornerRadius(5)
                 .padding(EdgeInsets(top: 0, leading: 0 , bottom: 0, trailing: 10))

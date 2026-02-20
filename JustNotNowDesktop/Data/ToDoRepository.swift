@@ -70,4 +70,12 @@ class ToDoRepository {
             toDoItems[index].isCompleted.toggle()
         }
     }
+    
+    func addOrUpdate(_ item: ToDoItem) {
+        if let index = toDoItems.firstIndex(where: { $0.id == item.id }) {
+            toDoItems[index] = item
+        } else {
+            toDoItems.append(item)
+        }
+    }
 }
