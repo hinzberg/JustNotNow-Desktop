@@ -12,6 +12,18 @@ class ToDoRepository {
     //private let badgeManager = ApptBadgeManager()
     private let notificationCenter = UNUserNotificationCenter.current()
     private var toDoItems: [ToDoItem] = []
+
+    var inboxItemsCount: Int {
+        toDoItems.filter { $0.priority == -1 }.count
+    }
+    
+    var backlogItemsCount: Int {
+        toDoItems.filter { $0.priority == 0 }.count
+    }
+    
+    var upNextItemsCount: Int {
+        toDoItems.filter { (1...5).contains($0.priority) }.count
+    }
     
     init() {
         
@@ -41,14 +53,7 @@ class ToDoRepository {
         return toDoItems.sorted { $0.priority > $1.priority }
     }
     
-    func filteredItems(matching filter: String) -> [ToDoItem] {
-        guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return toDoItems.sorted { $1.priority > $0.priority }
-        }
-        let filtered = toDoItems.filter { $0.matchesFilter(filter) }
-        return filtered.sorted { $0.priority > $1.priority }
-    }
-    
+    // Inbox - All items with Prioriry -1
     func filteredInboxItems(matching filter: String) -> [ToDoItem] {
         guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             let filtered = toDoItems.filter { $0.priority == -1 }
@@ -58,12 +63,23 @@ class ToDoRepository {
         return filtered.sorted { $0.priority > $1.priority }
     }
     
+    // Backlog - All items with Priority 0
     func filteredBacklogItems(matching filter: String) -> [ToDoItem] {
         guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             let filtered = toDoItems.filter { $0.priority == 0 }
             return filtered
         }
         let filtered = toDoItems.filter { $0.matchesFilter(filter) && $0.priority == 0 }
+        return filtered.sorted { $0.priority > $1.priority }
+    }
+    
+    // Up Next - All items with Priority between 1 and 5
+    func filteredUpNextItems(matching filter: String) -> [ToDoItem] {
+        guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let filtered = toDoItems.filter { (1...5).contains($0.priority) }
+            return filtered
+        }
+        let filtered = toDoItems.filter { $0.matchesFilter(filter) && (1...5).contains($0.priority) }
         return filtered.sorted { $0.priority > $1.priority }
     }
     

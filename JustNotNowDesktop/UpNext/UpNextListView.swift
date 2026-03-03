@@ -1,10 +1,10 @@
-//  BacklogListView.swift
+//  UpNextListView.swift
 //  JustNotNowDesktop
-//  Created by Holger Hinzberg on 20.02.26.
+//  Created by Holger Hinzberg on 03.03.26.
 
 import SwiftUI
 
-struct BacklogListView: View {
+struct UpNextListView: View {
     
     @Environment(ToDoRepository.self) private var repository
     @Namespace private var zoomNamespace
@@ -14,10 +14,10 @@ struct BacklogListView: View {
         
         NavigationStack {
             
-            let filteredItems = repository.filteredBacklogItems(matching: searchText)
+            let filteredItems = repository.filteredUpNextItems(matching: searchText)
             if filteredItems.isEmpty {
                 ContentUnavailableView(
-                    searchText.isEmpty ? "No Items in Backlog" : "No Results",
+                    searchText.isEmpty ? "No Items in UpNext" : "No Results",
                     systemImage: searchText.isEmpty ? "checkmark.circle" : "magnifyingglass",
                     description: Text(searchText.isEmpty ? "" : "Try a different search term.")
                 )
@@ -29,7 +29,7 @@ struct BacklogListView: View {
                     NavigationLink {
                         BacklogEditView(item: item)
                     } label: {
-                        InboxListItemView(item: item)
+                        UpNextListItemView(item: item)
                     }
                     .listRowSeparator(item == filteredItems.last ? .hidden : .visible)
                     .contextMenu {
@@ -42,10 +42,10 @@ struct BacklogListView: View {
                         }
                         Button(role: .destructive) {
                             withAnimation(.easeInOut(duration: 0.25)) {
-                                repository.moveToUpNext(item)
+                                repository.moveToBacklog(item)
                             }
                         } label: {
-                            Label("Move to Up Next", systemImage: "arrowshape.turn.up.forward")
+                            Label("Back to Backlog", systemImage: "arrowshape.turn.up.backward")
                         }
                     }
                 }
@@ -58,7 +58,7 @@ struct BacklogListView: View {
                 text: $searchText,
                 placement: .automatic ,
                 prompt: "Search ...")
-
+            
             Spacer()
         }
     }

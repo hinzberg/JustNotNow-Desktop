@@ -50,7 +50,6 @@ struct InboxListView: View {
                         }
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
             .listStyle(.plain)
             .navigationDestination(isPresented: $isNavigatingToAddForm) {
@@ -77,15 +76,6 @@ struct InboxListView: View {
                 }
             }
             Spacer()
-        }
-    }
-    
-    private func deleteItems(at offsets: IndexSet) {
-        withAnimation(.easeInOut(duration: 0.25)) {
-            for index in offsets {
-                let item = repository.filteredItems(matching: searchText)[index]
-                repository.delete(item)
-            }
         }
     }
 }

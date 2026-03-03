@@ -9,14 +9,8 @@ import SwiftUI
 
 struct UpNextView: View {
     var body: some View {
-        ZStack {
-            Color.green.opacity(0.15)
-                .ignoresSafeArea()
-
-            Text("Daily")
-                .font(.largeTitle)
-                .padding()
-        }
+        UpNextListView()
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
     }
 }
 
