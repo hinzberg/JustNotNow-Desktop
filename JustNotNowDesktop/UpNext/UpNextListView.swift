@@ -51,6 +51,7 @@ struct UpNextListView: View {
                 }
             }
             .listStyle(.plain)
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
             .navigationTitle(AppHelper.getWindowTitleWithVersion())
             
             // MARK: NavigationBar Search

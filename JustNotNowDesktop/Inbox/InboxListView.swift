@@ -10,6 +10,7 @@ struct InboxListView: View {
     @Namespace private var zoomNamespace
     @State private var searchText = ""
     @State private var isNavigatingToAddForm = false
+    @State private var isInspectorVisible = false
     
     var body: some View {
         
@@ -52,6 +53,7 @@ struct InboxListView: View {
                 }
             }
             .listStyle(.plain)
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
             .navigationDestination(isPresented: $isNavigatingToAddForm) {
                 InboxEditView(item: ToDoItem.new())
                     .transition(.slide)
@@ -74,8 +76,21 @@ struct InboxListView: View {
                             .matchedTransitionSource(id: "toDoEntry", in: zoomNamespace)
                     }
                 }
+                ToolbarItem(placement: .automatic) {
+                    Button {
+                        withAnimation {
+                            isInspectorVisible.toggle()
+                        }
+                    } label: {
+                        Image(systemName: "sidebar.trailing")
+                    }
+                    .help(isInspectorVisible ? "Hide Inspector" : "Show Inspector")
+                }
             }
             Spacer()
+        }
+        .inspector(isPresented: $isInspectorVisible) {
+            InspectorView()
         }
     }
 }
