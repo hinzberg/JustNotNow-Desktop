@@ -4,13 +4,11 @@
 
 import Foundation
 import Observation
-import UserNotifications
 
 @Observable
 class ToDoRepository {
     
     //private let badgeManager = ApptBadgeManager()
-    private let notificationCenter = UNUserNotificationCenter.current()
     private var toDoItems: [ToDoItem] = []
 
     var inboxItemsCount: Int {

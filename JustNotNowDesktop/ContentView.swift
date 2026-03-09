@@ -14,7 +14,7 @@ enum SidebarItem: String, CaseIterable, Identifiable {
 struct ContentView: View {
     @Environment(ToDoRepository.self) private var repository
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
-    @State private var selection: SidebarItem? = .inbox
+    @State private var selection: SidebarItem? = .upNext
     
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
