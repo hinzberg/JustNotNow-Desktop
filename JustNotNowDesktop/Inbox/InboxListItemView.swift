@@ -11,7 +11,6 @@ struct InboxListItemView: View {
     
     var body: some View {
         HStack {
-            
             // MARK: Colored rectangle based on priority
             Rectangle()
                 .fill(Colors.priorityColor(for: item))
@@ -27,8 +26,7 @@ struct InboxListItemView: View {
             
             VStack(alignment: .leading) {
                 Text(item.itemDescription)
-                    .font(.headline)
-                    .foregroundColor(item.isCompleted ? .secondary : .primary)
+                    .font(.title2)
             }
             Spacer()
             
@@ -41,8 +39,6 @@ struct InboxListItemView: View {
             }
         }
         .frame(maxWidth: .infinity)  // Ensure the HStack takes up the full width
-        .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
-        .listRowInsets(EdgeInsets())
-        .frame( maxWidth: .infinity)
-    }
+        .frame(minHeight: 40)
+   }
 }

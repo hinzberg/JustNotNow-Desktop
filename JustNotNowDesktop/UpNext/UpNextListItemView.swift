@@ -1,9 +1,6 @@
-//
 //  InboxListItemView.swift
 //  JustNotNowDesktop
-//
 //  Created by Holger Hinzberg on 20.02.26.
-//
 
 import SwiftUI
 
@@ -14,7 +11,6 @@ struct UpNextListItemView: View {
     
     var body: some View {
         HStack {
-            
             // MARK: Colored rectangle based on priority
             Rectangle()
             .fill(Colors.priorityColor(for: item))
@@ -30,7 +26,7 @@ struct UpNextListItemView: View {
             
             VStack(alignment: .leading) {
                 Text(item.itemDescription)
-                    .font(.headline)
+                    .font(.title2)
                     .foregroundColor(item.isCompleted ? .secondary : .primary)
                 
                 Text("Priority: \(item.priority)")
@@ -47,19 +43,7 @@ struct UpNextListItemView: View {
                     .help(date.formatted(date: .abbreviated, time: .shortened))
             }
         }
-        .frame(maxWidth: .infinity)  // Ensure the HStack takes up the full width
-        .padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
-        .listRowInsets(EdgeInsets())
         .frame( maxWidth: .infinity)
-        
-        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            Button {
-                repository.toggleCompletion(item)
-            } label: {
-                Label(item.isCompleted ? "Uncomplete" : "Complete",
-                      systemImage: item.isCompleted ? "arrow.uturn.backward.circle" : "checkmark.circle")
-            }
-            .tint(item.isCompleted ? .orange : .green)
-        }
+        .frame(minHeight: 40)
     }
 }
