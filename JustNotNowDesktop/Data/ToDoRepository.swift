@@ -28,10 +28,11 @@ class ToDoRepository {
         toDoItems = [
             ToDoItem(itemDescription: "Buy groceries", imageName: "cart", priority: -1, reminderDate: Date().addingTimeInterval(3600)),
             ToDoItem(itemDescription: "Walk the dog", imageName: "pawprint", priority: -1, reminderDate: nil),
-            ToDoItem(itemDescription: "Finish SwiftUI project", imageName: "laptopcomputer", priority: 5, reminderDate: Date().addingTimeInterval(86400)),
+            ToDoItem(itemDescription: "Finish SwiftUI project", imageName: "laptopcomputer", priority: 2, reminderDate: Date().addingTimeInterval(86400)),
             ToDoItem(itemDescription: "Call Mom", imageName: "phone", priority: 0, reminderDate: Date().addingTimeInterval(7200)),
             ToDoItem(itemDescription: "Read a book", imageName: "book", priority: 1, reminderDate: nil),
-            ToDoItem(itemDescription: "Go for a walk", imageName: "figure.walk", priority: 5, reminderDate: nil),
+            ToDoItem(itemDescription: "Go for a walk", imageName: "figure.walk", priority: 3, reminderDate: nil),
+            ToDoItem(itemDescription: "Watch a movie", imageName: "play.tv.fill", priority: 4, reminderDate: nil),
         ]
         
         //badgeManager.setBadgeNumber(toDoItems.count)
@@ -107,6 +108,19 @@ class ToDoRepository {
             toDoItems[index] = item
         } else {
             toDoItems.append(item)
+        }
+    }
+    
+    func changePriority(for item: ToDoItem, to newPriority: Int) {
+        if let index = toDoItems.firstIndex(where: { $0.id == item.id }) {
+            toDoItems[index].priority = newPriority
+        }
+    }
+    
+    func updateUpNextPriorities(for orderedItems: [ToDoItem]) {
+        for (offset, item) in orderedItems.enumerated() {
+            let newPriority = offset + 1
+            changePriority(for: item, to: newPriority)
         }
     }
     

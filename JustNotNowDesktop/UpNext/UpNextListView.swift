@@ -49,6 +49,7 @@ struct UpNextListView: View {
                         }
                     }
                 }
+                .onMove(perform: moveUpNextItems)
             }
             .listStyle(.plain)
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
@@ -62,5 +63,11 @@ struct UpNextListView: View {
             
             Spacer()
         }
+    }
+    
+    private func moveUpNextItems(from source: IndexSet, to destination: Int) {
+        var orderedItems = repository.filteredUpNextItems(matching: searchText)
+        orderedItems.move(fromOffsets: source, toOffset: destination)
+        repository.updateUpNextPriorities(for: orderedItems)
     }
 }
