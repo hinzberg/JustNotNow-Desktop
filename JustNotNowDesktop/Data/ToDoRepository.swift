@@ -28,10 +28,10 @@ class ToDoRepository {
         toDoItems = [
             ToDoItem(itemDescription: "Buy groceries", imageName: "cart", priority: -1, reminderDate: Date().addingTimeInterval(3600)),
             ToDoItem(itemDescription: "Walk the dog", imageName: "pawprint", priority: -1, reminderDate: nil),
-            ToDoItem(itemDescription: "Finish SwiftUI project", imageName: "laptopcomputer", priority: -1, reminderDate: Date().addingTimeInterval(86400)),
+            ToDoItem(itemDescription: "Finish SwiftUI project", imageName: "laptopcomputer", priority: 5, reminderDate: Date().addingTimeInterval(86400)),
             ToDoItem(itemDescription: "Call Mom", imageName: "phone", priority: 0, reminderDate: Date().addingTimeInterval(7200)),
             ToDoItem(itemDescription: "Read a book", imageName: "book", priority: 1, reminderDate: nil),
-            ToDoItem(itemDescription: "Go for a walk", imageName: "figure.walk", priority: 2, reminderDate: nil),
+            ToDoItem(itemDescription: "Go for a walk", imageName: "figure.walk", priority: 5, reminderDate: nil),
         ]
         
         //badgeManager.setBadgeNumber(toDoItems.count)
@@ -75,10 +75,10 @@ class ToDoRepository {
     func filteredUpNextItems(matching filter: String) -> [ToDoItem] {
         guard !filter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             let filtered = toDoItems.filter { (1...5).contains($0.priority) }
-            return filtered
+            return filtered.sorted { $0.priority < $1.priority }
         }
         let filtered = toDoItems.filter { $0.matchesFilter(filter) && (1...5).contains($0.priority) }
-        return filtered.sorted { $0.priority > $1.priority }
+        return filtered.sorted { $0.priority < $1.priority }
     }
     
     func add(_ item: ToDoItem) {
@@ -118,7 +118,7 @@ class ToDoRepository {
     
     func moveToUpNext(_ item: ToDoItem) {
         if let index = toDoItems.firstIndex(where: { $0.id == item.id }) {
-            toDoItems[index].priority = 1
+            toDoItems[index].priority = 5
         }
     }
 }

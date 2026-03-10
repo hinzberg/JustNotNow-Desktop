@@ -10,6 +10,7 @@ struct BacklogEditView: View {
     @Environment(\.dismiss) var dismiss
     
     @State var item : ToDoItem
+    @State private var showUpNextLimitAlert = false
     
     var body: some View {
         VStack {
@@ -20,8 +21,12 @@ struct BacklogEditView: View {
             
             HStack {
                 Button(role: .confirm) {
-                    repository.moveToUpNext(item)
-                    dismiss()
+                    if repository.upNextItemsCount >= AppSettings.shared.MaxItemsUpNext {
+                        showUpNextLimitAlert = true
+                    } else {
+                        repository.moveToUpNext(item)
+                        dismiss()
+                    }
                 } label: {
                     Text("Move to Up Next")
                         .font(.title2)
@@ -56,6 +61,11 @@ struct BacklogEditView: View {
         }
         .padding()
         .navigationTitle("Edit Backlog ToDo")
+        .alert("Too many items in Up Next", isPresented: $showUpNextLimitAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("There are already too many items in Up Next.")
+        }
     }
 }
 
