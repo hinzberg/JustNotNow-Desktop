@@ -17,5 +17,9 @@ struct JustNotNowDesktopApp: App {
             ContentView()
                 .environment(repository)
         }
+        
+        Settings {
+            SettingsView()
+        }
     }
 }
