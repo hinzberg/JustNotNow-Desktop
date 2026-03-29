@@ -5,12 +5,23 @@ struct GeneralSettingsView: View {
     @AppStorage("DataFolder") private var dataFolder: String = ""
     
     var body: some View {
-        HStack {
-            TextField("Select data folder", text: $dataFolder)
-            
-            Button("Choose...") {
-                chooseFolder()
+        VStack (alignment: .leading) {
+            Text("Folder Location to Store Data")
+                .font(.title2)
+            HStack {
+                TextField("Select data folder", text: $dataFolder)
+                    .font(.title2)
+                
+                Button(role: .confirm) {
+                    chooseFolder()
+                } label: {
+                    Text("Choose...")
+                        .font(.title2)
+                        .frame(width: 70)
+                }
+                .buttonStyle(.borderedProminent)
             }
+            Spacer()
         }
     }
     

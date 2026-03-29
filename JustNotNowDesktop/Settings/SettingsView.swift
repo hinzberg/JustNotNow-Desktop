@@ -7,7 +7,6 @@ struct SettingsView: View {
                 .tabItem {
                     Label("General", systemImage: "gearshape")
                 }
-            
             AdvancedSettingsView()
                 .tabItem {
                     Label("Advanced", systemImage: "slider.horizontal.3")

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AdvancedSettingsView: View {
     var body: some View {
-        EmptyView()
+        Text("Hello World")
     }
 }
 
