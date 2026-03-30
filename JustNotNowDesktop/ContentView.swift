@@ -8,6 +8,7 @@ enum SidebarItem: String, CaseIterable, Identifiable {
     case inbox = "Inbox"
     case backlog = "Backlog"
     case upNext = "Up Next"
+    case planing = "Planing"
     var id: Self { self }
 }
 
@@ -35,6 +36,8 @@ struct ContentView: View {
                     BacklogView()
                 case .upNext:
                     UpNextView()
+                case .planing:
+                    PlaningView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -49,6 +52,8 @@ struct ContentView: View {
             return repository.backlogItemsCount
         case .upNext:
             return repository.upNextItemsCount
+        case .planing:
+            return repository.inboxItemsCount + repository.backlogItemsCount + repository.upNextItemsCount
         }
     }
     
@@ -60,6 +65,8 @@ struct ContentView: View {
             return "archivebox"
         case .upNext:
             return "calendar"
+        case .planing:
+            return "square.grid.2x2"
         }
     }
 }

@@ -124,6 +124,41 @@ class ToDoRepository {
         }
     }
     
+    /// Compacts Up Next priorities to `1...n` after an item leaves that bucket.
+    func renumberUpNextItems() {
+        let items = toDoItems.filter { (1...5).contains($0.priority) }.sorted { $0.priority < $1.priority }
+        updateUpNextPriorities(for: items)
+    }
+    
+    func dropOnPlanningInbox(itemId: UUID) {
+        guard let index = toDoItems.firstIndex(where: { $0.id == itemId }) else { return }
+        let wasUpNext = (1...5).contains(toDoItems[index].priority)
+        toDoItems[index].priority = -1
+        if wasUpNext { renumberUpNextItems() }
+    }
+    
+    func dropOnPlanningBacklog(itemId: UUID) {
+        guard let index = toDoItems.firstIndex(where: { $0.id == itemId }) else { return }
+        let wasUpNext = (1...5).contains(toDoItems[index].priority)
+        toDoItems[index].priority = 0
+        if wasUpNext { renumberUpNextItems() }
+    }
+    
+    /// Adds an item to Up Next (end of queue). Returns `false` if the bucket is full.
+    func dropOnPlanningUpNext(itemId: UUID) -> Bool {
+        guard let index = toDoItems.firstIndex(where: { $0.id == itemId }) else { return false }
+        var current = toDoItems.filter { (1...5).contains($0.priority) }.sorted { $0.priority < $1.priority }
+        if current.contains(where: { $0.id == itemId }) {
+            return true
+        }
+        if current.count >= AppSettings.shared.MaxItemsUpNext {
+            return false
+        }
+        current.append(toDoItems[index])
+        updateUpNextPriorities(for: current)
+        return true
+    }
+    
     func moveToBacklog(_ item: ToDoItem) {
         if let index = toDoItems.firstIndex(where: { $0.id == item.id }) {
             toDoItems[index].priority = 0
